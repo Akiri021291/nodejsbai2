@@ -1,0 +1,36 @@
+{
+  "name": "nodejsbai2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "watch": "node-sass --watch  src/resources/scss --output src/public/css",
+    "_comment": "viet comment o day that la phuc tap",
+    "start": "nodemon --inspect src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akiri021291/nodejsbai2.git"
+  },
+  "keywords": [
+    "nodejsbai2"
+  ],
+  "author": "trungjs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akiri021291/nodejsbai2/issues"
+  },
+  "homepage": "https://github.com/Akiri021291/nodejsbai2#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "node-sass": "^7.0.1",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "express-favicon": "^2.0.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.18"
+  }
+}
