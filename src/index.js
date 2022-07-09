@@ -1,27 +1,24 @@
 const express = require('express');
 const morgan = require('morgan');
-const { engine } = require('express-handlebars'); // quản lý file thì phải 
+const { engine } = require('express-handlebars'); // quản lý file thì phải
 const path = require('path');
-const favicon = require('serve-favicon')
-const route =require('./routes/index'); // require cai index de chay app
-
-
+const favicon = require('serve-favicon');
+const route = require('./routes/index'); // require cai index de chay app
+const db = require('./config/db/index'); //connet toi mongodb
 
 const app = express();
-const port = 3000
-// handlebar 
-app.use(favicon(path.join(__dirname, 'public', 'img/favicon.ico')))
-app.engine('.hbs', engine({extname: '.hbs'}));
+const port = 3000;
+// handlebar
+app.use(favicon(path.join(__dirname, 'public', 'img/favicon.ico')));
+app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resources/views')); // dòng này để sử dụng cho get trang home và trang tin tức
-app.use('', express.static(path.join(__dirname, 'public'))) ;// dòng này để get lấy link các trang tĩnh 
-app.use(express.urlencoded({ extended: true }))//với các from gửi bằng phương thức póst sẽ khong có midleware voi name body nên cần gọi cái này
-app.use(express.json());// cũng như cái trên có thể gửi lên sever với file js json .. thì cần gọi cái này
+app.use('', express.static(path.join(__dirname, 'public'))); // dòng này để get lấy link các trang tĩnh
+app.use(express.urlencoded({ extended: true })); //với các from gửi bằng phương thức póst sẽ khong có midleware voi name body nên cần gọi cái này
+app.use(express.json()); // cũng như cái trên có thể gửi lên sever với file js json .. thì cần gọi cái này
 
-
-route(app) ;//chay app bang dong lenh nay 
-
-
+route(app); //chay app bang dong lenh nay
+db.connect();
 
 // app.get('/', (req, res) => {
 //   res.render('home');
@@ -33,14 +30,10 @@ route(app) ;//chay app bang dong lenh nay
 // });
 // app.post('/seach', (req, res) => {
 //   res.send('seach');
-//   console.log(req.body) // lay duoc du lieu tu phuong thuc post thong qua the body  
+//   console.log(req.body) // lay duoc du lieu tu phuong thuc post thong qua the body
 // });
- 
 
-  
-//morgan 
-// app.use(morgan('combined')) // xem request http 
+//morgan
+// app.use(morgan('combined')) // xem request http
 
-app.listen(port, () => {
-
-})   
+app.listen(port, () => {});
