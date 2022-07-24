@@ -41,3 +41,7 @@ db.connect();
 // app.use(morgan('combined')) // xem request http
 
 app.listen(port, () => {});
+// cach day co de len git
+// git add .
+//git commit -m "first commit"
+//git branch -M main
