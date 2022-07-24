@@ -1,16 +1,16 @@
 const { mutipleMongooseToObject } = require('../../util/mongoose');
 const Course = require('../modul/course');
 
-class SiteController {
-    //get home
-    home(rep, res, next) {
-        Course.find({})
+class trashController {
+    //get stored
+    trash(rep, res, next) {
+        Course.findDeleted({})
             .then((courses) =>
-                res.render('home', {
+                res.render('me/trash', {
                     courses: mutipleMongooseToObject(courses),
                 }),
             )
             .catch(next);
     }
 }
-module.exports = new SiteController();
+module.exports = new trashController();

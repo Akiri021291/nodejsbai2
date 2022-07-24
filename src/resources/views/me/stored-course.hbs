@@ -1,0 +1,169 @@
+<form class="container" name="container-form-submit" action="/course/hand-form-action" method="post">
+    <h1>Khoa Hoc Cua Toi </h1>
+    <a href="/me/trash/course">Thùng rác {{deleteCount}}</a>
+
+
+
+    <div class="form-check mt-3">
+      <div class="row">
+        <div class="col-sm-2 ">
+
+      <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+  <label class="form-check-label" for="checkbox-all">
+   Chọn tất cả
+  </label>
+</div>
+
+</div>
+ <div class="col-sm-4">
+   <select class="form-select"  aria-label="Default select example" name="action" required>
+  <option value="" selected>Open this select menu</option>
+  <option   value="delete">Delete</option>
+  <option  value="2">Two</option>
+  <option  value="3">Three</option>
+</select> 
+ </div>
+ 
+
+<div class="col-sm-3">
+  
+    <button type="submit" class="btn btn-outline-info check-all-submit" disabled >Submit </button>
+   </div>
+  </div>
+</div><hr>
+    <table class="table">
+  <thead>
+    <tr>
+      <th  scope="col">£</th>
+      <th  scope="col">STT</th>
+      <th scope="col">Ten Khoa Hoc</th>
+      <th scope="col">Trinh Do  </th>
+      <th scope="col">Ngay Tao</th>
+      <th scope="col"></th>
+      <th scope="col">  </th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each courses}}
+    <tr>
+    <td><input class="form-check-input" type="checkbox" name="courseIds[]" value="{{this._id}}" ></td> {{!--name se duoc in ra khi submit --}}
+      <th scope="row">{{sum @index 1}}</th> 
+      <td>{{this.tittle}}</td>
+      <td>{{this.level}}</td>
+      <td>{{this.createdAt}}</td>
+      <td  >
+      <a href="/course/{{this._id}}/edit" class="btn btn-outline-info me-2 ">Sua</a>
+      </td>
+      <td  >
+     <a href="" class="btn btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-id="{{this._id}}">Xoa</a>
+      </td>
+    </tr> 
+    {{else}}
+    <tr>
+      <td colspan="6" class="text-center">
+        chua co du lieu <a href="/course/create"> dang khoa hoc </a>
+      </td>
+    </tr>
+
+    {{/each}}
+  </tbody>
+</table>
+</form>
+
+
+
+{{!-- from --}}
+
+<form method="post" name="delete-form"></form>
+
+
+
+
+<!-- Modal delete -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xoa data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      Ban co muon xoa khong?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huy bo</button>
+        <button type="button" class="btn btn-primary" id="modal-delete">Xoa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() { 
+
+
+
+  var courseid
+const exampleModal = document.getElementById('staticBackdrop') // nho chuyen cai id cua modal staticBackdrop
+exampleModal.addEventListener('show.bs.modal', event => {
+  const button = event.relatedTarget
+  courseid = button.getAttribute('data-id') // lay duoc id trong nut xoa khi alert vi no da duoc chuyen vao trong event cai nay copy trung bootstrap
+
+var modaldelete=document.getElementById('modal-delete') // lay nut xoa o phan modal khi alert
+var deleteform=document.forms['delete-form']
+modaldelete.onclick=function(){ // bat su kien onclic de xoa
+deleteform.action='/course/'+ courseid +'?_method=delete';
+deleteform.submit();
+}
+
+})
+
+
+// xây dung logic click chọn click box
+
+var courseIds=$("input[name='courseIds[]']")
+var checkBoxAll=$('#checkbox-all') // lay nut check box all
+var checkallsubmit=$('.check-all-submit')
+var containerFormSubmit = document.forms['container-form-submit']
+ 
+ 
+
+checkBoxAll.change(function(){     //   khi click vao check box thi no se say ra su kien 
+ ischecked=checkBoxAll.prop('checked')
+renderbuttoncheck()
+courseIds.prop('checked',ischecked)
+ // khi click vao chon tat ca thi cac o ben duoi cung duoc tich vaodo bien ischeck treu false
+
+})
+ 
+
+//course id check box click
+courseIds.change(function(){
+  var slcheck= courseIds.length === $("input[name='courseIds[]']:checked").length // sl id check box bang sl id checked
+ checkBoxAll.prop('checked',slcheck)
+ 
+ renderbuttoncheck()
+})
+
+
+// re-render lai nut button kho co 1 nut duoc tick
+
+function renderbuttoncheck(){
+   var countcheckbox= $("input[name='courseIds[]']:checked").length
+
+
+   if(countcheckbox>0 || ischecked ){
+checkallsubmit.attr ('disabled',false)
+ }else{
+  checkallsubmit.attr ('disabled',true)
+ }
+}
+
+
+// nut submit
+
+
+
+})//ket thuc dom
+</script>

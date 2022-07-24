@@ -1,1 +1,31 @@
-<h1>page home</h1>
+
+
+<div class="container">
+    <div class="row">
+     
+
+ {{#each courses}}
+   <div class="col-sm-4 ">
+            <div class="card form-course" >
+                <a href="/course/{{this.slug}}">
+                <img src="{{this.image}}" class="card-img-top img-size" alt="...">
+                </a>
+
+                <a href="/course/{{this.slug}}">
+                <div class="card-body">
+                <h1 class="card-title text-tittle">{{this.tittle}} </h1>
+                <p class="card-text text-content">{{this.content}}</p>
+                </a>
+            
+            
+                <a href="#" class="btn btn-primary">Mua khoa hoc</a>
+            </div>
+            </div>
+ </div>
+ {{/each}}
+
+       
+    </div>
+</div>
+
+

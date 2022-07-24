@@ -1,12 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
+const slug = require('mongoose-slug-generator');
+const mongooseDelete = require('mongoose-delete');
+mongoose.plugin(slug);
+const Course = new Schema(
+    {
+        tittle: { type: String, required: true }, //required la cai bat buoc can nhap vao
+        content: { type: String },
+        image: { type: String },
+        slug: { type: String },
+        idvideo: { type: String },
+        level: { type: String },
+        slug: { type: String, slug: 'tittle', unique: true },
+    },
+    {
+        timestamps: true, // tu dong tra ve thoi gian create
+    },
+);
 
-const Test2 = new Schema({
-    name: { type: String, default: 'hahaha' },
-    age: { type: Number, min: 18, index: true },
-    bio: { type: String, match: /[a-z]/ },
-    date: { type: Date, default: Date.now },
-    buff: Buffer,
-});
-module.exports = mongoose.model('test2', Test2);
+Course.plugin(mongooseDelete, { deletedAt: true, overrideMethods: 'all' });
+
+module.exports = mongoose.model('course', Course); //tep trong mongoodb

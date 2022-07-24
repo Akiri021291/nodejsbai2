@@ -1,0 +1,23 @@
+<div class="container mt-5">
+    <form method="post" action="/course/{{course._id}}?_method=PUT">
+    <div class="mb-3">
+        <label for="tittle" class="form-label mt-2">Tittle</label>
+        <input  class="form-control" id="tittle" value="{{course.tittle}}" name="tittle" >
+    </div>
+   
+    <div class="mb-3">
+        <label for="content" class="form-label mt-2">Content</label>
+        <textarea type="text"  class="form-control" id="content" value="" name="content">{{course.content}}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="idvideo" class="form-label mt-2">Idvideo</label>
+        <input  class="form-control" id="idvideo" value="{{course.idvideo}}" name="idvideo">
+    </div>
+    <div class="mb-3">
+        <label for="level" class="form-label mt-2">Level</label>
+        <input  class="form-control" id="level" value="{{course.level}}" name="level">
+    </div>
+   
+    <button type="submit" class="btn btn-primary mt-5">Cap nhap khoa hoc </button>
+    </form>   
+</div>

@@ -1,0 +1,101 @@
+<div class="container">
+    <h1>Khoa hoc da xoa</h1>
+    <a href="/me/stored/course">Quay lai danh sach khoa hoc</a>
+    
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Ten Khoa Hoc</th>
+      <th scope="col">Trinh Do  </th>
+      <th scope="col">Ngay Tao</th>
+      <th scope="col"></th>
+      <th scope="col">  </th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each courses}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.tittle}}</td>
+      <td>{{this.level}}</td>
+      <td>{{this.createdAt}}</td>
+      <td  >
+      <a href="" class="btn btn-outline-info me-2 btn-restore " data-id="{{this._id}}">Khoi phuc</a>
+      </td>
+      <td  >
+     <a href="" class="btn btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-id="{{this._id}}">Xoa vinh vien</a>
+      </td>
+    </tr> 
+    {{else}}
+    <tr>
+      <td colspan="6" class="text-center">
+        chua co du lieu <a href="/course/create"> dang khoa hoc </a>
+      </td>
+    </tr>
+
+    {{/each}}
+  </tbody>
+</table>
+</div>
+{{!-- from --}}
+
+<form method="post" name="delete-form"></form>
+<form method="post" name="restore-form"></form>
+
+
+
+
+<!-- Modal delete -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xoa data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      Ban co muon xoa khong?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huy bo</button>
+        <button type="button" class="btn btn-primary" id="modal-delete">Xoa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() { // dong nay de viet query sau khi load eventxong 
+
+
+var courseid 
+  const exampleModal = document.getElementById('staticBackdrop'); // nho chuyen cai id cua modal staticBackdrop
+  var restoreBtn= $ ('.btn-restore');
+
+
+
+
+
+  var modaldelete=document.getElementById('modal-delete'); // lay nut xoa o phan modal khi alert
+  var deleteform=document.forms['delete-form'];
+  var restoreform=document.forms['restore-form'];
+    exampleModal.addEventListener('show.bs.modal', event => {
+    const button = event.relatedTarget;
+    courseid = button.getAttribute('data-id') // lay duoc id trong nut xoa khi alert vi no da duoc chuyen vao trong event cai nay copy trung bootstrap
+    modaldelete.onclick=function(){ // bat su kien onclic de xoa
+    deleteform.action='/course/'+ courseid +'/force?_method=delete';
+    deleteform.submit();
+    }
+    })// ket thuc event
+
+  restoreBtn.click(function(event){
+    event.preventDefault()
+    var courseid= $(this).data('id')
+deleteform.action='/course/'+ courseid +'/restore?_method=patch';
+    deleteform.submit();
+  })
+
+  })//ket thuc dom
+   
+</script>
